@@ -1,7 +1,7 @@
 {% extends "learning_logs/base.html" %}
 
 {% block page_header %}
-  <h2>Add a New Topic</h2>
+  <h2>Add a New Category</h2>
 {% endblock page_header %}
 
 {% block content %}
@@ -10,14 +10,14 @@
       <div class="col-md-6">
         <div class="card">
           <div class="card-header">
-            <h3 class="card-title">New Topic</h3>
+            <h3 class="card-title">New Category</h3>
           </div>
           <div class="card-body">
-            <form action="{% url 'learning_logs:new_topic' %}" method="post">
+            <form action="{% url 'learning_logs:new_category' %}" method="post">
               {% csrf_token %}
               {{ form.as_p }}
-              <button type="submit" class="btn btn-primary">Add Topic</button>
-              <a href="{% url 'learning_logs:topics' %}" class="btn btn-secondary">Cancel</a>
+              <button type="submit" class="btn btn-primary">Add Category</button>
+              <a href="{% url 'learning_logs:categories' %}" class="btn btn-secondary">Cancel</a>
             </form>
           </div>
         </div>

@@ -1,0 +1,21 @@
+{% extends "learning_logs/base.html" %}
+
+{% block page_header %}
+  <h2>Topics in {{ category.name }}</h2>
+{% endblock page_header %}
+
+{% block content %}
+  <ul class="list-group">
+    {% for topic in topics %}
+      <li class="list-group-item">
+        <a href="{% url 'learning_logs:topic' topic.id %}">{{ topic.text }}</a>
+        <a href="{% url 'learning_logs:delete_topic' topic.id %}" class="btn btn-danger btn-sm float-right">Delete</a>
+      </li>
+    {% empty %}
+      <li class="list-group-item">No topics have been added to this category yet.</li>
+    {% endfor %}
+  </ul>
+
+  <h3><a href="{% url 'learning_logs:new_topic' %}" class="btn btn-primary mt-3">Add a new topic</a></h3>
+{% endblock content %}
+

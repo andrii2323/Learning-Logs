@@ -1,9 +1,9 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
 
-from .models import Topic, Entry
-from .forms import TopicForm, EntryForm
+from .models import Topic, Entry, Category
+from .forms import TopicForm, EntryForm, CategoryForm
 
 
 def index(request):
@@ -35,7 +35,7 @@ def topic(request, topic_id):
 def new_topic(request):
     """Added a new topic"""
     if request.method != 'POST':
-        form = TopicForm
+        form = TopicForm()
     else:
         form = TopicForm(data=request.POST)
         if form.is_valid():
@@ -46,6 +46,14 @@ def new_topic(request):
 
     context = {'form': form}
     return render(request, 'learning_logs/new_topic.html', context)
+
+@login_required
+def delete_topic(request, topic_id):
+    topic = get_object_or_404(Topic, id=topic_id, owner=request.user)
+    if request.method != 'POST':
+        topic.delete()
+        return redirect('learning_logs:topics')
+    return render(request, 'learning_logs/delete_topic.html', {'topic': topic})
 
 
 @login_required
@@ -84,3 +92,42 @@ def edit_entry(request, entry_id):
 
     context = {'entry': entry, 'topic': topic, 'form': form}
     return render(request, 'learning_logs/edit_entry.html', context)
+
+
+@login_required
+def categories(request):
+    """Represent all categories"""
+    categories = Category.objects.filter(owner=request.user)
+    context = {'categories': categories}
+    return render(request, 'learning_logs/categories.html', context)
+
+
+@login_required
+def new_category(request):
+    if request.method != 'POST':
+        form = CategoryForm()
+    else:
+        form = CategoryForm(data=request.POST)
+        if form.is_valid():
+            new_category = form.save(commit=False)
+            new_category.owner = request.user
+            new_category.save()
+            return redirect('learning_logs:categories')
+
+    context = {'form': form}
+    return render(request, 'learning_logs/new_category.html', context)
+
+@login_required
+def category_topics(request, category_id):
+    category = get_object_or_404(Category, id=category_id)
+    topics = category.topics.filter(owner=request.user).order_by('date_added')
+    context = {'category': category, 'topics': topics}
+    return render(request, 'learning_logs/category_topics.html', context)
+
+@login_required
+def delete_category(request, category_id):
+    category = get_object_or_404(Category, id=category_id, owner=request.user)
+    if request.method != 'POST':
+        category.delete()
+        return redirect('learning_logs:categories')
+    return render(request, 'learning_logs/delete_category.html', {'category': category})

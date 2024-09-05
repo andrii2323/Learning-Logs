@@ -1,0 +1,18 @@
+{% extends "learning_logs/base.html" %}
+
+{% block page_header %}
+  <h2>Delete Topic</h2>
+{% endblock page_header %}
+
+{% block content %}
+  <div class="alert alert-danger" role="alert">
+    <h4 class="alert-heading">Are you sure you want to delete the topic "{{ topic.text }}"?</h4>
+    <p>This action cannot be undone.</p>
+    <hr>
+    <form method="post">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-danger">Delete</button>
+      <a href="{% url 'learning_logs:category_topics' topic.category.id %}" class="btn btn-secondary">Cancel</a>
+    </form>
+  </div>
+{% endblock content %}
