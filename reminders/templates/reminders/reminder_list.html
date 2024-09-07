@@ -1,0 +1,23 @@
+{% extends "learning_logs/base.html" %}
+
+{% block page_header %}
+  <h2>Your Reminders</h2>
+{% endblock page_header %}
+
+{% block content %}
+  <ul class="list-group">
+    {% for reminder in reminders %}
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+        {{ reminder.message }} - {{ reminder.reminder_date }}
+        <form action="{% url 'reminders:delete_reminder' reminder.id %}" method="post" style="display:inline;">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+        </form>
+      </li>
+    {% empty %}
+      <li class="list-group-item">You have no reminders.</li>
+    {% endfor %}
+  </ul>
+
+  <h3><a href="{% url 'reminders:new_reminder' %}" class="btn btn-primary mt-3">Add a new reminder</a></h3>
+{% endblock content %}

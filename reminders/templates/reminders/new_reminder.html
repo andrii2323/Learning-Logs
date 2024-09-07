@@ -1,0 +1,26 @@
+{% extends "learning_logs/base.html" %}
+
+{% block page_header %}
+  <h2>Add a New Reminder</h2>
+{% endblock page_header %}
+
+{% block content %}
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 offset-md-3">
+        <div class="card">
+          <div class="card-header">
+            Add a new reminder
+          </div>
+          <div class="card-body">
+            <form action="{% url 'reminders:new_reminder' %}" method="post">
+              {% csrf_token %}
+              {{ form.as_p }}
+              <button type="submit" class="btn btn-primary">Add Reminder</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock content %}
