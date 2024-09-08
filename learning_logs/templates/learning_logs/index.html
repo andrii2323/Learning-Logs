@@ -2,7 +2,7 @@
 
 {% block page_header %}
   <div class="jumbotron">
-    <h1 class="display-3">Track your learning</h1>
+    <h1 class="display-3">Track Your Learning</h1>
 
     <p class="lead">Make your own Learning Log, and keep a list of the
         topics you're learning about. Whenever you learn something new about a topic,
@@ -12,3 +12,12 @@
         Register &raquo;</a>
   </div>
 {% endblock page_header %}
+
+{% block content %}
+  <div class="container">
+    <h2>Feedback</h2>
+    <p>We value your feedback! Please let us know what you think about the Learning Log.</p>
+    <a class="btn btn-secondary" href="{% url 'feedback:feedback_list' %}" role="button">View Feedback</a>
+    <a class="btn btn-primary" href="{% url 'feedback:new_feedback' %}" role="button">Submit Feedback</a>
+  </div>
+{% endblock content %}

@@ -117,17 +117,19 @@ def new_category(request):
     context = {'form': form}
     return render(request, 'learning_logs/new_category.html', context)
 
+
 @login_required
 def category_topics(request, category_id):
-    category = get_object_or_404(Category, id=category_id)
+    category = get_object_or_404(Category, id=category_id, owner=request.user)
     topics = category.topics.filter(owner=request.user).order_by('date_added')
     context = {'category': category, 'topics': topics}
     return render(request, 'learning_logs/category_topics.html', context)
 
+
 @login_required
 def delete_category(request, category_id):
     category = get_object_or_404(Category, id=category_id, owner=request.user)
-    if request.method != 'POST':
+    if request.method == 'POST':
         category.delete()
         return redirect('learning_logs:categories')
     return render(request, 'learning_logs/delete_category.html', {'category': category})

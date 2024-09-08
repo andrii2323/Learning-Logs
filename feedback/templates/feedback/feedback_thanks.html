@@ -1,0 +1,10 @@
+{% extends "learning_logs/base.html" %}
+
+{% block page_header %}
+  <h2>Thank You</h2>
+{% endblock page_header %}
+
+{% block content %}
+  <p>Thank you for your feedback!</p>
+  <a href="{% url 'feedback:feedback_list' %}" class="btn btn-primary">Back to Feedback List</a>
+{% endblock content %}

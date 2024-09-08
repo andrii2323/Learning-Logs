@@ -1,0 +1,16 @@
+{% extends "learning_logs/base.html" %}
+
+{% block page_header %}
+  <h2>Submit Feedback</h2>
+{% endblock page_header %}
+
+{% block content %}
+  <form method="post" action="{% url 'feedback:new_feedback' %}">
+    {% csrf_token %}
+    <div class="form-group">
+      <label for="message">Message:</label>
+      <textarea id="message" name="message" class="form-control" rows="5" required></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit Feedback</button>
+  </form>
+{% endblock content %}

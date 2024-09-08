@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'learning_logs',
     'users',
     'reminders',
+    'feedback',
     # Third party apps
     'bootstrap4',
     # Installed aplication django
